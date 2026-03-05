@@ -1,6 +1,6 @@
 Skin AI – Smart Skin Type Detection & Recommendation System
 
-Skin AI is an intelligent web application that analyzes a user's skin type and provides personalized skincare guidance. The system uses image analysis and predefined logic to detect skin patterns and then recommends suitable skincare routines, natural remedies, exercises, and product suggestions.
+AI in skin care is an intelligent web application that analyzes a user's skin type and provides personalized skincare guidance. The system uses image analysis and predefined logic to detect skin patterns and then recommends suitable skincare routines, natural remedies, exercises, and product suggestions.
 
 Features
 
