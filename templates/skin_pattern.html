@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Skin Pattern Tracker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- ✅ ONLY ADDED: Move card to left so background girl is visible -->
+    <style>
+    .page-overlay {
+        display: flex;
+        justify-content: flex-start;   /* move card to left */
+        align-items: center;
+        padding-left: 80px;            /* space from left edge */
+        background: transparent;       /* no white wash */
+    }
+
+    .container {
+        margin: 0;                     /* remove auto centering */
+    }
+</style>
+</head>
+<body class="bg-skin-pattern">
+<div class="page-overlay">
+<div class="container">
+
+    <h2>🧠 Skin Pattern Tracking System</h2>
+
+    <p>Track pimples, cycle, sleep, and water to detect skin patterns.</p>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for message in messages %}
+          <div class="success-box">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form action="/save_skin_pattern" method="post" class="skin-form">
+
+        <label>Date:</label>
+        <input type="date" name="date" required>
+
+        <label>Cycle Start Date:</label>
+        <input type="date" name="cycle_start_date" required>
+
+        <label>Cycle End Date:</label>
+        <input type="date" name="cycle_end_date" required>
+
+        <label>Cycle Day:</label>
+        <input type="number" name="cycle_day" min="1" max="35" required>
+
+        <label>Number of Pimples:</label>
+        <input type="number" name="pimples" min="0" required>
+
+        <label>Pimple Occurrence:</label>
+        <select name="pimple_occurrence" required>
+            <option value="">Select</option>
+            <option value="before_cycle">Before Cycle</option>
+            <option value="during_cycle">During Cycle</option>
+            <option value="after_cycle">After Cycle</option>
+        </select>
+
+        <label>Sleep Hours:</label>
+        <input type="number" name="sleep_hours" min="0" max="24" required>
+
+        <label>Water Glasses:</label>
+        <input type="number" name="water_glasses" min="0" required>
+
+        <button type="submit">Save Data</button>&nbsp;&nbsp;&nbsp;
+
+    </form><br>
+    <a href="/">
+        <button style="
+            padding:10px 16px; 
+            background-color:hsl(10, 83%, 50%); 
+            color:white; 
+            border:none; 
+            border-radius:5px; 
+            cursor:pointer;
+            font-size:14px;">
+             Back To Home
+        </button>
+    </a>
+</div>
+</div>
+<script>
+setTimeout(() => {
+    let msg = document.querySelector(".success-box");
+    if(msg) msg.style.display = "none";
+}, 3000);
+</script>
+</body>
+</html>

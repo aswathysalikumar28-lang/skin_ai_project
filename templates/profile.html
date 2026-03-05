@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            background-color: white;
+            width: 400px;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .info {
+            margin: 15px 0;
+            font-size: 14px;
+        }
+
+        .delete-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .delete-btn:hover {
+            background-color: #c0392b;
+        }
+
+        .back-btn {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            background: #ff7f50;
+            color: white;
+            padding: 8px;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <h2>My Profile</h2>
+
+        <div class="info">
+            <strong>Username:</strong> {{ user.username }}
+        </div>
+
+        <div class="info">
+            <strong>Email:</strong> {{ user.email }}
+        </div>
+
+        <form action="/delete_account" method="POST"
+              onsubmit="return confirm('Are you sure? This action cannot be undone.')">
+            <button type="submit" class="delete-btn">
+                Delete Account
+            </button>
+        </form>
+
+        <a href="/" class="back-btn">Back to Home</a>
+    </div>
+
+</body>
+</html>

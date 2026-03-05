@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Daily Skincare Habits</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .card {
+            background-color: #fff;
+            padding: 25px;
+            margin: 20px auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            max-width: 500px;
+        }
+        .card h2 {
+            margin-bottom: 20px;
+            text-align: center;
+            color: #333;
+        }
+        .card label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .card input[type="number"],
+        .card select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+        .card button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4caf50;
+            color: #fff;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .card button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<!-- ✅ FIX 1: correct background class -->
+<body class="bg-habit">
+
+<!-- ✅ FIX 2: overlay wrapper -->
+<div class="page-overlay">
+
+    <div class="card">
+        <h2>Daily Skincare Habits</h2>
+        <form action="/habit_result" method="POST">
+            <label for="water">Water Intake (Glasses per day)</label>
+            <input type="number" name="water" min="0" max="20" required>
+
+            <label for="sunscreen">Did you apply sunscreen?</label>
+            <select name="sunscreen" required>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+
+            <label for="cleanser">Did you cleanse your face properly?</label>
+            <select name="cleanser" required>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+
+            <label for="sleep">Did you sleep at least 7 hours?</label>
+            <select name="sleep" required>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+
+            <button type="submit" class="submit-btn">Submit Habits</button>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>

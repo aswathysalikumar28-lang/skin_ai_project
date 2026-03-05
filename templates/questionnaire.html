@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Skin Habit Questionnaire</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: url("{{ url_for('static', filename='images/questionnaire-bg.jpeg') }}") 
+                        no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.92);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.25);
+        }
+
+        h2 { text-align: center; margin-bottom: 20px; }
+        p { margin-top: 15px; font-weight: 500; }
+
+        select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #ff8c6a;
+            color: white;
+            padding: 12px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            margin-top: 20px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover { background-color: #ff5a3c; }
+    </style>
+</head>
+
+<body>
+<div class="container">
+    <h2>Skin Habit Questionnaire</h2>
+
+    <form action="/questionnaire" method="POST">
+
+        <p>1. How oily does your skin feel after washing?</p>
+        <select name="oil_after_wash" required>
+          <option value="0">Not oily</option>
+          <option value="1">Slightly oily</option>
+          <option value="2">Very oily</option>
+        </select>
+
+        <p>2. How often do you get acne or pimples?</p>
+        <select name="acne_frequency" required>
+          <option value="0">Rarely</option>
+          <option value="1">Sometimes</option>
+          <option value="2">Frequently</option>
+        </select>
+
+        <p>3. How dry or tight does your skin feel?</p>
+        <select name="tightness" required>
+          <option value="0">Never</option>
+          <option value="1">Sometimes</option>
+          <option value="2">Very often</option>
+        </select>
+
+        <p>4. How much water do you drink daily?</p>
+        <select name="low_water_intake" required>
+          <option value="2">Less than 1L</option>
+          <option value="1">1–2L</option>
+          <option value="0">More than 2L</option>
+        </select>
+
+        <p>5. Does your skin become shiny by midday?</p>
+        <select name="midday_shine" required>
+          <option value="0">No</option>
+          <option value="1">Sometimes</option>
+          <option value="2">Yes</option>
+        </select>
+
+        <p>6. Are your pores clearly visible?</p>
+        <select name="pore_visibility" required>
+          <option value="0">No</option>
+          <option value="1">Somewhat</option>
+          <option value="2">Very visible</option>
+        </select>
+
+        <p>7. Does your skin feel flaky or rough?</p>
+        <select name="flakiness" required>
+          <option value="0">No</option>
+          <option value="1">Sometimes</option>
+          <option value="2">Often</option>
+        </select>
+
+        <p>8. Do you need heavy moisturizer?</p>
+        <select name="needs_heavy_moisturizer" required>
+          <option value="0">No</option>
+          <option value="1">Sometimes</option>
+          <option value="2">Yes</option>
+        </select>
+
+        <p>9. Does your skin react to new products?</p>
+        <select name="product_reaction" required>
+          <option value="0">No</option>
+          <option value="1">Occasionally</option>
+          <option value="2">Frequently</option>
+        </select>
+
+        <p>10. Do you experience redness?</p>
+        <select name="redness" required>
+          <option value="0">No</option>
+          <option value="1">Sometimes</option>
+          <option value="2">Often</option>
+        </select>
+
+        <p>11. Do you feel itching or burning?</p>
+        <select name="itching" required>
+          <option value="0">No</option>
+          <option value="1">Sometimes</option>
+          <option value="2">Often</option>
+        </select>
+
+        <button type="submit">Predict Skin Type</button>
+    </form>
+</div>
+</body>
+</html>

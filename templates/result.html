@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Skin Type Result</title>
+    <style>
+body{
+    font-family: Montserrat, sans-serif;
+    background: #000; /* fallback if video doesn't load */
+    margin: 0;
+    height: 100vh;
+    overflow: hidden; /* prevent scroll */
+}
+
+/* VIDEO BACKGROUND */
+#bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -2;
+    pointer-events: none;
+}
+
+/* DARK OVERLAY (ADDED) */
+body::before{
+    content:"";
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: -1;
+}
+
+/* CONTENT TEXT FLOATING */
+.result-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    border: none;
+    color: white;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.8); /* ADDED for visibility */
+}
+
+.result-box h2,
+.result-box h1,
+.result-box h3,
+.result-box p,
+.result-box ul,
+.result-box li {
+    background: transparent;
+    margin: 5px 0;
+}
+
+/* TEXT STYLING */
+h1 {
+    font-size: 36px;
+}
+
+.skin-type {
+    font-size: 42px;
+    color: #ff6a4d;
+    font-weight: bold;
+}
+
+.advice {
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+/* IMPROVED KIT CARD (only styling enhanced) */
+.kit-card {
+    background: rgba(255,255,255,0.18);
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+
+/* BUTTONS */
+button {
+    margin-top: 15px;
+    padding: 12px 30px;
+    background: #ff6a4d;
+    border: none;
+    color: white;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+button:hover {
+    background: #ff3b1f;
+}
+a {
+    text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- VIDEO BACKGROUND -->
+<video autoplay muted loop playsinline id="bg-video">
+    <source src="{{ url_for('static', filename='videos/result_bg.mp4') }}" type="video/mp4">
+</video>   
+
+<!-- FLOATING TEXT -->
+<div class="result-box">
+    <h2>Your Skin Type:</h2>
+    <h1>{{ skin_type }}</h1>
+
+    <h3>AI Recommendation:</h3>
+    <p><b>Recommendation:</b> {{ advice }}</p>
+    <p><b>Daily Routine:</b> {{ routine }}</p>
+
+    <h3>Recommended Yoga & Exercises:</h3>
+    <ul>
+        {% for y in yoga %}
+            <li>{{ y }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Recommended Skincare Products:</h3>
+    <ul>
+        {% for p in products %}
+            <li>{{ p }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>🌿 Natural Remedies</h3>
+    <ul>
+        {% for item in natural_remedies %}
+            <li>{{ item }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>🛍 Recommended Skincare Kit</h3>
+    <div class="kit-card">
+        <strong>{{ kit_name }}</strong>
+        <p style="margin-top:8px;">
+            Includes: 
+            {% for product in products %}
+                {{ product }}{% if not loop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+    </div>
+
+    <a href="/feedback">
+        <button>Give Feedback After 1 Week</button>
+    </a>
+    <br>
+    <a href="/"><button>Back To Home</button></a>
+</div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Skin Type Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<!-- ✅ ADD THIS -->
+<body class="bg-upload-skin">
+
+<!-- ✅ ADD THIS -->
+<div class="page-overlay">
+
+    <div class="card">
+        <h1>🧠 AI Skin Type Detection</h1>
+        <p>Upload a face image and let AI analyze your skin type.</p>
+
+        {% if error %}
+<p style="color:red; font-weight:bold;">{{ error }}</p>
+{% endif %}
+
+        <form action="/upload_skin" method="POST" enctype="multipart/form-data">
+            <input 
+                type="file" 
+                name="skin_image" 
+                class="file-input" 
+                accept="image/*" 
+                required
+            >
+            <br><br>
+            <button type="submit" class="btn">Analyze Skin</button>
+        </form>
+
+        <br>
+        <a href="/"><button class="btn"> Back To Home</button></a>
+    </div>
+
+</div> <!-- overlay -->
+
+</body>
+</html>
