@@ -50,6 +50,7 @@
             height: 100vh;
             width: 100%;
             position: relative;
+            margin-left:220px;
         }
 
         .hero-overlay {
@@ -104,6 +105,7 @@
             padding: 60px 20px;
             background-color: #fff;
             flex-wrap: wrap;
+            margin-left:220px;
         }
 
         .feature {
@@ -139,12 +141,106 @@
             .features {
                 flex-direction: column;
                 align-items: center;
+                margin-left:0;
             }
+
+            .hero{
+                margin-left:0;
+            }
+        }
+
+        /* SIDEBAR */
+        .sidebar{
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 220px;
+            height: 100%;
+            background: hwb(0 71% 20% / 0.749);
+            padding-top: 20px;
+            z-index:1000;
+        }
+
+        .sidebar a{
+            display: block;
+            color: white;
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .sidebar a:hover{
+            background: #ff6a4d;
+        }
+
+        /* USER PROFILE IN SIDEBAR (ADDED) */
+        .sidebar-user{
+            text-align:center;
+            color:white;
+            margin-bottom:20px;
+            padding-bottom:15px;
+            border-bottom:1px solid rgba(255,255,255,0.3);
+        }
+
+        .sidebar-user .avatar{
+            width:60px;
+            height:60px;
+            border-radius:50%;
+            background:#ff8c6a;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:24px;
+            margin:auto;
+            margin-bottom:8px;
+        }
+
+        .sidebar-user .name{
+            font-weight:600;
+            font-size:15px;
+        }
+
+        .sidebar-user .email{
+            font-size:12px;
+            opacity:0.8;
+        }
+
+        /* MOVE MAIN CONTENT */
+        .result-box{
+            margin-left: 240px;
         }
     </style>
 </head>
 
 <body>
+
+<!-- SIDEBAR (ADDED) -->
+<div class="sidebar">
+{% if user %}
+<div class="sidebar-profile">
+    <strong>{{ user }}</strong><br>
+    <small>{{ email }}</small>
+</div>
+{% endif %}
+    <!-- USER PROFILE SECTION (ADDED) -->
+    {% if user %}
+    <div class="sidebar-user">
+        <div class="avatar">
+            {{ user[0]|upper }}
+        </div>
+        <div class="name">{{ user }}</div>
+        <div class="email">{{ email }}</div>
+    </div>
+    {% endif %}
+
+    <a href="/">🏠 Home</a>
+    <a href="/questionnaire">📝 Skin Test</a>
+    <a href="/habits">📋 Track Daily Skin Habits</a>
+    <a href="/skin_pattern">📊 Skin Pattern Tracker</a>
+    <a href="/view_skin_data">📈 View Skin Data</a>
+    <a href="/upload_skin">📷 Upload Skin Image</a>
+    <a href="/feedback">⭐ Feedback</a>
+</div>
 
 <!-- USER LOGIN PANEL -->
 <div class="user-panel">
@@ -207,6 +303,7 @@
     </div>
    
 </section>
+
 <!-- Footer at the end of the page -->
 <footer style="
     margin-top:50px;
@@ -215,6 +312,7 @@
     color:#666;
     padding:15px 0;
     background:#f8f9fa;
+    margin-left:220px;
 ">
     <a href="/privacy_policy" style="color:#17a2b8; text-decoration:none; margin-right:10px;">Privacy Policy</a>
     <a href="/terms" style="color:#17a2b8; text-decoration:none;">Terms & Conditions</a>

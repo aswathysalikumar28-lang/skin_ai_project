@@ -119,6 +119,7 @@ def login():
 
         if user and user["password"] == password:
             session["user"] = user["username"]
+            session["email"] = user["email"]   # ADDED (to show email in sidebar)
             return redirect("/")
         else:
             flash("Invalid username or password")
@@ -166,6 +167,12 @@ def reset_password():
 def logout():
     session.pop("user", None)
     return redirect("/login")
+    
+@app.route("/")
+def home():
+    user = session.get("user")
+    email = session.get("email")
+    return render_template("index.html", user=user, email=email)    
 
 
 @app.route("/profile")
