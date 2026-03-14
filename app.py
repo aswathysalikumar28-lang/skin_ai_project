@@ -119,7 +119,7 @@ def login():
 
         if user and user["password"] == password:
             session["user"] = user["username"]
-            session["email"] = user["email"]   # ADDED (to show email in sidebar)
+            session["email"] = user["email"]   # <-- ADD THIS LINE
             return redirect("/")
         else:
             flash("Invalid username or password")
@@ -189,7 +189,11 @@ def profile():
 
     conn.close()
 
-    return render_template("profile.html", user=user)
+    return render_template(
+        "profile.html",
+        user=user["username"],
+        email=user["email"]
+    )
 
 
 @app.route("/delete_account", methods=["POST"])

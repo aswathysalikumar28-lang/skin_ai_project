@@ -18,29 +18,6 @@
             color: #333;
         }
 
-        /* USER LOGIN PANEL (ADDED) */
-        .user-panel {
-            position: fixed;
-            top: 15px;
-            right: 20px;
-            background: rgba(0,0,0,0.6);
-            padding: 8px 15px;
-            border-radius: 20px;
-            color: white;
-            font-size: 14px;
-            z-index: 999;
-        }
-
-        .user-panel a {
-            color: #ff8c6a;
-            text-decoration: none;
-            margin-left: 8px;
-        }
-
-        .user-panel a:hover {
-            text-decoration: underline;
-        }
-
         /* HERO SECTION */
         .hero {
             background-image: url("{{ url_for('static', filename='images/hero-bg.jpeg') }}");
@@ -50,7 +27,7 @@
             height: 100vh;
             width: 100%;
             position: relative;
-            margin-left:220px;
+            margin-left:0;
         }
 
         .hero-overlay {
@@ -105,7 +82,7 @@
             padding: 60px 20px;
             background-color: #fff;
             flex-wrap: wrap;
-            margin-left:220px;
+            margin-left:0;
         }
 
         .feature {
@@ -159,6 +136,9 @@
             background: hwb(0 71% 20% / 0.749);
             padding-top: 20px;
             z-index:1000;
+            display:flex;
+            flex-direction:column;
+            justify-content:space-between;
         }
 
         .sidebar a{
@@ -173,7 +153,7 @@
             background: #ff6a4d;
         }
 
-        /* USER PROFILE IN SIDEBAR (ADDED) */
+        /* USER PROFILE IN SIDEBAR */
         .sidebar-user{
             text-align:center;
             color:white;
@@ -205,54 +185,88 @@
             opacity:0.8;
         }
 
+        /* LOGOUT BOTTOM */
+        .sidebar-bottom{
+            margin-bottom:20px;
+        }
+
         /* MOVE MAIN CONTENT */
         .result-box{
             margin-left: 240px;
+        }
+
+        /* HOW IT WORKS SECTION */
+        .how-it-works{
+            padding:60px 20px;
+            text-align:center;
+            background:#fff5f2;
+        }
+
+        .how-it-works h2{
+            font-size:32px;
+            margin-bottom:40px;
+        }
+
+        .steps{
+            display:flex;
+            justify-content:center;
+            gap:40px;
+            flex-wrap:wrap;
+        }
+
+        .step{
+            max-width:250px;
+        }
+
+        .step h3{
+            margin-bottom:10px;
+            font-size:20px;
+        }
+
+        .step p{
+            font-size:15px;
+            color:#555;
         }
     </style>
 </head>
 
 <body>
 
-<!-- SIDEBAR (ADDED) -->
-<div class="sidebar">
+<!-- SIDEBAR -->
 {% if user %}
-<div class="sidebar-profile">
-    <strong>{{ user }}</strong><br>
-    <small>{{ email }}</small>
-</div>
-{% endif %}
-    <!-- USER PROFILE SECTION (ADDED) -->
-    {% if user %}
-    <div class="sidebar-user">
+<div class="sidebar">
+
+<div>
+
+{% if user %}
+<div class="sidebar-user">
         <div class="avatar">
             {{ user[0]|upper }}
         </div>
-        <div class="name">{{ user }}</div>
+        <div class="name">{{ user|capitalize }}</div>
         <div class="email">{{ email }}</div>
-    </div>
-    {% endif %}
+</div>
+{% endif %}
 
-    <a href="/">🏠 Home</a>
-    <a href="/questionnaire">📝 Skin Test</a>
-    <a href="/habits">📋 Track Daily Skin Habits</a>
-    <a href="/skin_pattern">📊 Skin Pattern Tracker</a>
-    <a href="/view_skin_data">📈 View Skin Data</a>
-    <a href="/upload_skin">📷 Upload Skin Image</a>
-    <a href="/feedback">⭐ Feedback</a>
+<a href="/profile">👤 Profile</a>
+<a href="/">🏠 Home</a>
+<a href="/questionnaire">📝 Skin Test</a>
+<a href="/habits">📋 Track Daily Skin Habits</a>
+<a href="/skin_pattern">📊 Skin Pattern Tracker</a>
+<a href="/view_skin_data">📈 View Skin Data</a>
+<a href="/upload_skin">📷 Upload Skin Image</a>
+
+
 </div>
 
-<!-- USER LOGIN PANEL -->
-<div class="user-panel">
-    {% if user %}
-        <a href="/profile">Profile</a>
-        👤 {{ user }}
-        <a href="/logout">Logout</a>
-    {% else %}
-        <a href="/register">Register</a>
-        <a href="/login">Login</a>
-    {% endif %}
+<div class="sidebar-bottom">
+{% if user %}
+<a href="/logout">🚪 Logout</a>
+{% endif %}
 </div>
+
+</div>
+{% endif %}
 
 <!-- HERO IMAGE -->
 <section class="hero">
@@ -261,24 +275,35 @@
         <h1>Smart Skincare and Timeless Glow</h1>
         <p>Discover your skin type based on your daily habits and get personalized recommendations for healthier skin.</p>
 
-        <!-- EXISTING BUTTONS -->
-        <a href="/questionnaire">Check Skin Type</a>
-        <a href="/habits">Track Daily Skin Habits</a>
+        {% if not user %}
+<a href="/register">Register</a>
+<a href="/login">Login</a>
+{% endif %}
 
-        <br><br>
+    </div>
+</section>
 
-        <!-- NEW BUTTONS (LOGIN & REGISTER REMOVED HERE) -->
-        <a href="/skin_pattern">Skin Pattern Tracker</a>
-        <a href="/upload_skin">Upload Skin Image</a>
-        
-    
+<!-- HOW IT WORKS SECTION -->
+<section class="how-it-works">
+    <h2>How It Works</h2>
 
-    <!-- Button to go to View Skin Data -->
-    <a href="/view_skin_data">
-        
-            View Skin Data
-        </button>
-    </a>
+    <div class="steps">
+
+        <div class="step">
+            <h3>1. Create Account</h3>
+            <p>Register and log in to begin tracking your skincare habits.</p>
+        </div>
+
+        <div class="step">
+            <h3>2. Track Daily Habits</h3>
+            <p>Record sleep, water intake, and daily skincare routines.</p>
+        </div>
+
+        <div class="step">
+            <h3>3. Analyze Skin</h3>
+            <p>Upload skin images and monitor patterns with smart analysis.</p>
+        </div>
+
     </div>
 </section>
 
@@ -304,7 +329,7 @@
    
 </section>
 
-<!-- Footer at the end of the page -->
+<!-- Footer -->
 <footer style="
     margin-top:50px;
     text-align:center;
@@ -312,7 +337,7 @@
     color:#666;
     padding:15px 0;
     background:#f8f9fa;
-    margin-left:220px;
+    margin-left:0;
 ">
     <a href="/privacy_policy" style="color:#17a2b8; text-decoration:none; margin-right:10px;">Privacy Policy</a>
     <a href="/terms" style="color:#17a2b8; text-decoration:none;">Terms & Conditions</a>
