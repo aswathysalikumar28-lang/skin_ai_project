@@ -77,8 +77,42 @@ init_feedback_db()
 
 # ================= HOME =================
 @app.route("/")
-def index():
-    return render_template("index.html", user=session.get("user"), username=session.get("user"))
+def homepage():
+    conn = sqlite3.connect("userdb.db")
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    # Get average values from skin_pattern table
+    cursor.execute("""
+        SELECT 
+            AVG(sleep_hours) AS avg_sleep,
+            AVG(water_glasses) AS avg_water,
+            AVG(pimples) AS avg_pimples
+        FROM skin_pattern
+    """)
+    data = cursor.fetchone()
+
+    # Get total number of entries
+    cursor.execute("SELECT COUNT(*) AS total_entries FROM skin_pattern")
+    total = cursor.fetchone()
+
+    conn.close()
+
+    avg_sleep = round(data["avg_sleep"], 2) if data["avg_sleep"] else 0
+    avg_water = round(data["avg_water"], 2) if data["avg_water"] else 0
+    avg_pimples = round(data["avg_pimples"], 2) if data["avg_pimples"] else 0
+    total_entries = total["total_entries"] if total["total_entries"] else 0
+
+    # Render the homepage with dashboard data
+    return render_template(
+        "index.html",
+        user=session.get("user"),
+        email=session.get("email"),
+        avg_sleep=avg_sleep,
+        avg_water=avg_water,
+        avg_pimples=avg_pimples,
+        total_entries=total_entries
+    )
 
 
 # ================= REGISTER =================
@@ -90,6 +124,18 @@ def register():
         password = request.form["password"]
 
         conn = get_db()
+
+        # Check if username or email already exists
+        existing_user = conn.execute(
+            "SELECT * FROM users WHERE username = ? OR email = ?",
+            (username, email)
+        ).fetchone()
+
+        if existing_user:
+            flash("Username or Email already registered. Please use another.")
+            conn.close()
+            return redirect("/register")
+
         conn.execute(
             "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
             (username, email, password)
@@ -729,46 +775,15 @@ def delete(record_id):
     return redirect('/view_skin_data') 
 
 
-@app.route("/dashboard")
-def dashboard():
-    conn = sqlite3.connect("userdb.db")
-    conn.row_factory = sqlite3.Row
-    cursor = conn.cursor()
 
-    # Get average values from skin_pattern table
-    cursor.execute("""
-        SELECT 
-            AVG(sleep_hours) AS avg_sleep,
-            AVG(water_glasses) AS avg_water,
-            AVG(pimples) AS avg_pimples
-        FROM skin_pattern
-    """)
-    
-    data = cursor.fetchone()
 
-    # Get total number of entries
-    cursor.execute("SELECT COUNT(*) AS total_entries FROM skin_pattern")
-    total = cursor.fetchone()
+@app.route("/privacy_policy")
+def privacy_policy():
+    return render_template("privacy_policy.html")
 
-    conn.close()
-
-    # If table is empty, avoid None errors
-    avg_sleep = round(data["avg_sleep"], 2) if data["avg_sleep"] else 0
-    avg_water = round(data["avg_water"], 2) if data["avg_water"] else 0
-    avg_pimples = round(data["avg_pimples"], 2) if data["avg_pimples"] else 0
-    total_entries = total["total_entries"] if total["total_entries"] else 0
-
-    return render_template(
-        "dashboard.html",
-        avg_sleep=avg_sleep,
-        avg_water=avg_water,
-        avg_pimples=avg_pimples,
-        total_entries=total_entries
-    )
-
-@app.route("/privacy")
-def privacy():
-    return render_template("privacy.html")
+@app.route("/terms")
+def terms():
+    return render_template("terms.html")
 
 
 # ================= FEEDBACK =================

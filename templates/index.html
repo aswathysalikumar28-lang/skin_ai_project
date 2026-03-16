@@ -16,6 +16,11 @@
             font-family: 'Montserrat', sans-serif;
             background-color: #fdfaf7;
             color: #333;
+            padding-top:60px;
+        }
+
+        section{
+            padding:80px 20px;
         }
 
         /* HERO SECTION */
@@ -24,10 +29,10 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            height: 100vh;
+            height:100vh;
             width: 100%;
             position: relative;
-            margin-left:0;
+            z-index: 0;
         }
 
         .hero-overlay {
@@ -37,6 +42,7 @@
             position: absolute;
             top: 0;
             left: 0;
+            z-index: 1;
         }
 
         .hero-content {
@@ -75,70 +81,88 @@
             background-color: #ff5a3c;
         }
 
-        /* FEATURES SECTION */
-        .features {
-            display: flex;
-            justify-content: space-around;
-            padding: 60px 20px;
-            background-color: #fff;
-            flex-wrap: wrap;
-            margin-left:0;
+        /* DASHBOARD OVER HERO */
+        .dashboard-overlay {
+            position: absolute;
+            top: 60px; /* below topbar */
+            left: 240px; /* beside sidebar */
+            width: calc(100% - 240px);
+            padding: 40px;
+            background: rgba(255,255,255,0); /* fully transparent background */
+            z-index: 3;
         }
 
-        .feature {
-            text-align: center;
-            max-width: 250px;
-            margin: 20px;
+        .dashboard-cards{
+            display:flex;
+            flex-wrap:wrap;
+            gap:25px;
         }
 
-        .feature img {
-            width: 100px;
-            margin-bottom: 15px;
+        .dashboard-card{
+            width:220px;
+            background:white;
+            border-radius:12px;
+            padding:25px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.08);
+            transition:0.3s;
+            text-align:center;
         }
 
-        .feature h3 {
-            font-size: 20px;
-            margin-bottom: 10px;
+        .dashboard-card:hover{
+            transform:translateY(-5px);
+            box-shadow:0 15px 35px rgba(0,0,0,0.12);
         }
 
-        .feature p {
-            font-size: 16px;
-            color: #555;
+        .dashboard-card h3{
+            margin-bottom:10px;
+            font-size:18px;
         }
 
-        @media (max-width: 768px) {
-            .hero-content h1 {
-                font-size: 32px;
-            }
+        .dashboard-card p{
+            font-size:14px;
+            color:#555;
+            margin-bottom:15px;
+        }
 
-            .hero-content p {
-                font-size: 16px;
-            }
+        /* TOP NAVBAR */
+        .topbar{
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:60px;
+            background:white;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:0 30px;
+            box-shadow:0 3px 10px rgba(0,0,0,0.1);
+            z-index:2000;
+        }
 
-            .features {
-                flex-direction: column;
-                align-items: center;
-                margin-left:0;
-            }
+        .logo{
+            font-weight:600;
+            font-size:18px;
+        }
 
-            .hero{
-                margin-left:0;
-            }
+        .top-user{
+            font-size:15px;
         }
 
         /* SIDEBAR */
         .sidebar{
             position: fixed;
             left: 0;
-            top: 0;
+            top:60px;
             width: 220px;
-            height: 100%;
-            background: hwb(0 71% 20% / 0.749);
-            padding-top: 20px;
+            height:calc(100vh - 60px);
+            background:#cfa89a;
+            padding-top:20px;
             z-index:1000;
             display:flex;
             flex-direction:column;
             justify-content:space-between;
+            overflow-y:auto;
         }
 
         .sidebar a{
@@ -152,6 +176,11 @@
         .sidebar a:hover{
             background: #ff6a4d;
         }
+
+        .sidebar a.active {
+    background: #ff5a3c;  /* highlighted background */
+    font-weight: 600;      /* bold text */
+}
 
         /* USER PROFILE IN SIDEBAR */
         .sidebar-user{
@@ -185,14 +214,8 @@
             opacity:0.8;
         }
 
-        /* LOGOUT BOTTOM */
         .sidebar-bottom{
             margin-bottom:20px;
-        }
-
-        /* MOVE MAIN CONTENT */
-        .result-box{
-            margin-left: 240px;
         }
 
         /* HOW IT WORKS SECTION */
@@ -227,121 +250,270 @@
             font-size:15px;
             color:#555;
         }
+
+        /* FEATURES SECTION */
+        .features {
+            display: flex;
+            justify-content: space-around;
+            padding: 60px 20px;
+            background-color: #fff;
+            flex-wrap: wrap;
+            margin-left:0;
+        }
+
+        .feature {
+            text-align: center;
+            max-width: 250px;
+            margin: 20px;
+            background:white;
+            padding:25px;
+            border-radius:12px;
+            box-shadow:0 10px 25px rgba(0,0,0,0.08);
+            transition:0.3s;
+        }
+
+        .feature:hover{
+            transform:translateY(-5px);
+            box-shadow:0 15px 35px rgba(0,0,0,0.12);
+        }
+
+        .feature img {
+            width: 100px;
+            margin-bottom: 15px;
+        }
+
+        .feature h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .feature p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        /* ABOUT SECTION */
+        .about {
+            background:#fff5f2;
+            text-align:center;
+            padding:60px 20px;
+        }
+
+        .about h2{
+            margin-bottom:30px;
+        }
+
+        .about p{
+            max-width:700px;
+            margin:auto;
+            font-size:16px;
+            color:#555;
+        }
+
+        /* CONTACT SECTION */
+        .contact {
+            background:white;
+            text-align:center;
+            padding:60px 20px;
+        }
+
+        /* FOOTER */
+        footer {
+            margin-top:50px;
+            text-align:center;
+            font-size:14px;
+            color:#666;
+            padding:15px 0;
+            background:#f8f9fa;
+        }
+
+        footer a {
+            color:#17a2b8;
+            text-decoration:none;
+            margin-right:10px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 32px;
+            }
+            .hero-content p {
+                font-size: 16px;
+            }
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+            .dashboard-overlay {
+                left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+            .topbar {
+                padding: 0 15px;
+            }
+            .sidebar {
+                width: 180px;
+            }
+        }
+
     </style>
 </head>
+<body><!-- TOP NAVBAR --><div class="topbar">
+    <div class="logo">Smart Skin AI</div>
+    {% if user %}
+    <div class="top-user">
+        {{ user|capitalize }}
+    </div>
+    {% endif %}
+</div><!-- SIDEBAR -->{% if user %}
 
-<body>
-
-<!-- SIDEBAR -->
-{% if user %}
 <div class="sidebar">
-
-<div>
-
-{% if user %}
-<div class="sidebar-user">
-        <div class="avatar">
-            {{ user[0]|upper }}
+    <div>
+        <div class="sidebar-user">
+            <div class="avatar">{{ user[0]|upper }}</div>
+            <div class="name">{{ user|capitalize }}</div>
+            <div class="email">{{ email }}</div>
         </div>
-        <div class="name">{{ user|capitalize }}</div>
-        <div class="email">{{ email }}</div>
+       <a href="#dashboard" class="{% if request.path == '/' %}active{% endif %}">📊 Dashboard</a>
+        <a href="/profile">👤 Profile</a>    <a href="/questionnaire">📝 Skin Test</a>
+    <a href="/habits">📋 Track Daily Skin Habits</a>
+    <a href="/skin_pattern">📊 Skin Pattern Tracker</a>
+    <a href="/view_skin_data">📈 View Skin Data</a>
+    <a href="/upload_skin">📷 Upload Skin Image</a>
 </div>
-{% endif %}
-
-<a href="/profile">👤 Profile</a>
-<a href="/">🏠 Home</a>
-<a href="/questionnaire">📝 Skin Test</a>
-<a href="/habits">📋 Track Daily Skin Habits</a>
-<a href="/skin_pattern">📊 Skin Pattern Tracker</a>
-<a href="/view_skin_data">📈 View Skin Data</a>
-<a href="/upload_skin">📷 Upload Skin Image</a>
-
-
-</div>
-
 <div class="sidebar-bottom">
-{% if user %}
-<a href="/logout">🚪 Logout</a>
-{% endif %}
+    <a href="/logout">🚪 Logout</a>
 </div>
 
 </div>
-{% endif %}
-
-<!-- HERO IMAGE -->
-<section class="hero">
+{% endif %}<!-- HERO IMAGE --><section class="hero">
     <div class="hero-overlay"></div>
     <div class="hero-content">
         <h1>Smart Skincare and Timeless Glow</h1>
         <p>Discover your skin type based on your daily habits and get personalized recommendations for healthier skin.</p>
-
         {% if not user %}
-<a href="/register">Register</a>
-<a href="/login">Login</a>
+        <a href="/register">Register</a>
+        <a href="/login">Login</a>
+        {% endif %}
+    </div>{% if user %}
+<!-- Dashboard over Hero with white background -->
+<div class="dashboard-overlay" style="background:white; border-radius:12px; padding:40px; box-shadow:0 10px 25px rgba(0,0,0,0.1); margin-top:-50px;">
+    <h2>Your Skin Progress</h2>
+    <div class="dashboard-cards">
+        <div class="dashboard-card">
+            <h3>Total Entries</h3>
+            <p>{{ total_entries or 0 }}</p>
+        </div>
+        <div class="dashboard-card">
+            <h3>Average Sleep</h3>
+            <p>{{ avg_sleep or 0 }} hrs</p>
+        </div>
+        <div class="dashboard-card">
+            <h3>Average Water</h3>
+            <p>{{ avg_water or 0 }} L</p>
+        </div>
+        <div class="dashboard-card">
+            <h3>Average Pimples</h3>
+            <p>{{ avg_pimples or 0 }}</p>
+        </div>
+    </div>
+</div>
 {% endif %}
 
-    </div>
-</section>
-
-<!-- HOW IT WORKS SECTION -->
-<section class="how-it-works">
+</section><!-- HOW IT WORKS SECTION --><section class="how-it-works">
     <h2>How It Works</h2>
-
     <div class="steps">
-
         <div class="step">
             <h3>1. Create Account</h3>
             <p>Register and log in to begin tracking your skincare habits.</p>
         </div>
-
         <div class="step">
             <h3>2. Track Daily Habits</h3>
             <p>Record sleep, water intake, and daily skincare routines.</p>
         </div>
-
         <div class="step">
             <h3>3. Analyze Skin</h3>
             <p>Upload skin images and monitor patterns with smart analysis.</p>
         </div>
-
     </div>
-</section>
-
-<!-- FEATURES SECTION -->
-<section class="features">
+</section><!-- FEATURES SECTION --><section class="features">
     <div class="feature">
-        <img src="https://images.unsplash.com/photo-1605902711622-cfb43c4438a5?auto=format&fit=crop&w=200&q=80" alt="Sleep Icon">
+        <img src="https://images.unsplash.com/photo-1605902711622-cfb43c4438a5?auto=format&fit=crop&w=200&q=80">
         <h3>Sleep Well</h3>
         <p>Better sleep improves your skin's glow and repair.</p>
     </div>
-
     <div class="feature">
-        <img src="https://images.unsplash.com/photo-1588776814546-40d4eaf43349?auto=format&fit=crop&w=200&q=80" alt="Water Icon">
+        <img src="https://images.unsplash.com/photo-1588776814546-40d4eaf43349?auto=format&fit=crop&w=200&q=80">
         <h3>Hydration</h3>
         <p>Drink enough water daily to keep skin hydrated.</p>
     </div>
-
     <div class="feature">
-        <img src="https://images.unsplash.com/photo-1590561863625-2ad6e9245d4d?auto=format&fit=crop&w=200&q=80" alt="Skincare Routine Icon">
+        <img src="https://images.unsplash.com/photo-1590561863625-2ad6e9245d4d?auto=format&fit=crop&w=200&q=80">
         <h3>Skincare Routine</h3>
         <p>Follow a simple daily routine to maintain healthy skin.</p>
     </div>
-   
-</section>
+</section><!-- ABOUT SECTION --><section class="about">
+    <h2>About Our Platform</h2>
+    <p>This platform helps users understand their skin health through daily habit tracking,
+        skin analysis, and personalized skincare recommendations.</p>
+</section><!-- CONTACT SECTION --><section class="contact">
+    <h2>Contact</h2>
+    <p>Email: smartskincare@gmail.com</p>
+    <p>We welcome feedback and suggestions.</p>
+</section><!-- FOOTER --><footer>
+    <a href="/privacy_policy">Privacy Policy</a>
+    <a href="/terms">Terms & Conditions</a></footer>
+    
+   <script>
+function speakWelcome(){
 
-<!-- Footer -->
-<footer style="
-    margin-top:50px;
-    text-align:center;
-    font-size:14px;
-    color:#666;
-    padding:15px 0;
-    background:#f8f9fa;
-    margin-left:0;
-">
-    <a href="/privacy_policy" style="color:#17a2b8; text-decoration:none; margin-right:10px;">Privacy Policy</a>
-    <a href="/terms" style="color:#17a2b8; text-decoration:none;">Terms & Conditions</a>
-    <a href="{{ url_for('privacy') }}">Privacy Policy</a>
-</footer> 
-</body>
+    const text = "Welcome to Smart Skin AI dashboard. Your personal skin habit intelligence system is ready.";
+
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.lang = "en-US";
+    speech.rate = 1;
+    speech.pitch = 1.1;
+
+    function setFemaleVoice() {
+        let voices = speechSynthesis.getVoices();
+        for(let i=0;i<voices.length;i++){
+            let name = voices[i].name.toLowerCase();
+            if(
+                name.includes("zira") ||
+                name.includes("samantha") ||
+                name.includes("female") ||
+                name.includes("google us english") ||
+                name.includes("woman")
+            ){
+                speech.voice = voices[i];
+                break;
+            }
+        }
+        speechSynthesis.speak(speech);
+    }
+
+    // Some browsers load voices asynchronously
+    if(speechSynthesis.getVoices().length === 0){
+        speechSynthesis.onvoiceschanged = setFemaleVoice;
+    } else {
+        setFemaleVoice();
+    }
+}
+
+{% if user %}
+window.onload = function(){
+    // Only speak if not already spoken this session
+    if(!sessionStorage.getItem("welcomeSpoken")){
+        speakWelcome();
+        sessionStorage.setItem("welcomeSpoken", "true");
+    }
+};
+{% endif %}
+
+window.addEventListener("beforeunload", function(){
+    speechSynthesis.cancel();
+});
+</script>
+ </body>
 </html>

@@ -111,12 +111,12 @@ a {
 </video>   
 
 <!-- FLOATING TEXT -->
-<div class="result-box">
+<div class="result-box" id="resultText">
     <h2>Your Skin Type:</h2>
     <h1>{{ skin_type }}</h1>
 
-    <h3>AI Recommendation:</h3>
-    <p><b>Recommendation:</b> {{ advice }}</p>
+    
+    <p><b> AI Recommendation:</b> {{ advice }}</p>
     <p><b>Daily Routine:</b> {{ routine }}</p>
 
     <h3>Recommended Yoga & Exercises:</h3>
@@ -152,10 +152,50 @@ a {
     </div>
 
     <a href="/feedback">
-        <button>Give Feedback After 1 Week</button>
-    </a>
-    <br>
-    <a href="/"><button>Back To Home</button></a>
+    <button onclick="stopSpeech()">Give Feedback After 1 Week</button>
+</a>
+<br>
+<a href="/">
+    <button onclick="stopSpeech()">Back To Home</button>
+</a>
 </div>
+
+<script>
+function speakResult() {
+
+    let text = document.getElementById("resultText").innerText;
+
+    let speech = new SpeechSynthesisUtterance(text);
+    speech.lang = "en-US";
+    speech.rate = 1;
+    speech.pitch = 1;
+
+    let voices = window.speechSynthesis.getVoices();
+
+    // Prefer English female voices
+    let femaleVoice = voices.find(v => 
+        v.lang === "en-US" &&
+        (v.name.includes("Zira") || 
+         v.name.includes("Female") || 
+         v.name.includes("Google") || 
+         v.name.includes("Samantha"))
+    );
+
+    if (femaleVoice) {
+        speech.voice = femaleVoice;
+    }
+
+    window.speechSynthesis.speak(speech);
+}
+
+window.speechSynthesis.onvoiceschanged = speakResult;
+</script>
+
+<script>
+function stopSpeech(){
+    window.speechSynthesis.cancel();
+}
+</script>
+
 </body>
 </html>

@@ -454,3 +454,15 @@ body.bg-fixed {
     position: relative;
     z-index: 2;
 }
+
+.how-it-works{
+    text-align:center;
+}
+
+.steps{
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    flex-wrap:wrap;
+}
+

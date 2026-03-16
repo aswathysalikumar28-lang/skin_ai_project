@@ -1,85 +1,101 @@
-<!DOCTYPE html>
-<html>
-<head>
+<!DOCTYPE html><html><head>
     <title>Habit Result</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"><style>
+    .habit-overlay {
+        background: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }/* ✨ NEW: Glass Card */
+.result-container {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    max-width: 600px;
+    width: 90%;
+    text-align: center;
+}
 
-    <style>
-        .habit-overlay {
-            background: transparent;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+</style></head><body class="bg-habit-result"><div class="habit-overlay"><div class="result-container"><p class="small-title">Your Skin Habit Score:</p>
+<h1 class="skin-type">{{ score }}/8</h1><div class="progress">
+    <div class="bar" style="
+        width: {{ (score / 8) * 100 }}%;
+        background-color: {% if score >= 7 %}green{% elif score >= 4 %}orange{% else %}red{% endif %};
+        transition: width 0.5s ease;
+    "></div>
+</div><h3>Status:</h3>
+<p><b>{{ status }}</b></p>{% if score >= 7 %}
+<p>Great job! Keep following your routine to maintain healthy skin habits.</p>
 
-        /* ✨ NEW: Glass Card */
-        .result-container {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            max-width: 600px;
-            width: 90%;
-            text-align: center;
-        }
-    </style>
-</head>
+{% elif score >= 4 %}
+<p>You are doing well, but try to improve your skincare routine consistency.</p>
 
-<body class="bg-habit-result">
+{% else %}
+<p>You need to improve your skincare habits and follow a proper daily routine.</p>
+{% endif %}
 
-<div class="habit-overlay">
+{% if score < 4 %}
+<ul>
+<li>Wash your face twice daily</li>
+<li>Use sunscreen regularly</li>
+<li>Drink more water</li>
+<li>Avoid touching your face frequently</li>
+</ul>
 
-<div class="result-container">
+{% elif score < 7 %}
+<ul>
+<li>Be consistent with skincare routine</li>
+<li>Sleep at least 7 hours daily</li>
+<li>Reduce junk food and sugar</li>
+</ul>
+{% endif %}
 
-    <p class="small-title">Your Skin Habit Score:</p>
-    <h1 class="skin-type">{{ score }}/8</h1>
+<a href="/">
+    <button class="home-btn">Back To Home</button>
+</a></div></div><script>
+function speakResult(){let text = document.querySelector(".result-container").innerText;
 
-    <div class="progress">
-        <div class="bar" style="
-            width: {{ (score / 8) * 100 }}%;
-            background-color: {% if score >= 7 %}green{% elif score >= 4 %}orange{% else %}red{% endif %};
-            transition: width 0.5s ease;
-        "></div>
-    </div>
+const speech = new SpeechSynthesisUtterance(text);
+speech.lang = "en-US";
+speech.rate = 1;
+speech.pitch = 1.1;
 
-    <h3>Status:</h3>
-    <p><b>{{ status }}</b></p>
+let voices = speechSynthesis.getVoices();
 
-    {% if score >= 7 %}
-        <p>Great job! Keep following your routine to maintain healthy skin habits.</p>
+for(let i=0;i<voices.length;i++){
 
-    {% elif score >= 4 %}
-        <p>You are doing well, but try to improve your skincare routine consistency.</p>
+    let name = voices[i].name.toLowerCase();
 
-    {% else %}
-        <p>You need to improve your skincare habits and follow a proper daily routine.</p>
-    {% endif %}
+    if(
+        name.includes("zira") ||
+        name.includes("samantha") ||
+        name.includes("female") ||
+        name.includes("google us english") ||
+        name.includes("woman")
+    ){
+        speech.voice = voices[i];
+        break;
+    }
+}
 
-    {% if score < 4 %}
-        <ul>
-            <li>Wash your face twice daily</li>
-            <li>Use sunscreen regularly</li>
-            <li>Drink more water</li>
-            <li>Avoid touching your face frequently</li>
-        </ul>
+speechSynthesis.speak(speech);
 
-    {% elif score < 7 %}
-        <ul>
-            <li>Be consistent with skincare routine</li>
-            <li>Sleep at least 7 hours daily</li>
-            <li>Reduce junk food and sugar</li>
-        </ul>
-    {% endif %}
+}
 
-    <a href="/">
-        <button class="home-btn">Back To Home</button>
-    </a>
+window.onload = function(){
+speakResult();
+};
 
-</div>
+window.speechSynthesis.onvoiceschanged = function(){
+speakResult();
+};
 
-</div>
+window.addEventListener("beforeunload", function(){
+speechSynthesis.cancel();
+});
+</script></body>
 
-</body>
 </html>
