@@ -241,6 +241,42 @@ def profile():
         email=user["email"]
     )
 
+@app.route("/edit_profile", methods=["GET", "POST"])
+def edit_profile():
+    if "user" not in session:
+        flash("Login required")
+        return redirect("/login")
+
+    conn = get_db()
+    cursor = conn.cursor()
+
+    if request.method == "POST":
+        new_username = request.form["username"]
+        new_email = request.form["email"]
+
+        cursor.execute(
+            "UPDATE users SET username = ?, email = ? WHERE username = ?",
+            (new_username, new_email, session["user"])
+        )
+        conn.commit()
+
+        # update session
+        session["user"] = new_username
+
+        flash("Profile updated successfully")
+        return redirect("/profile")
+
+    # GET request → load current data
+    cursor.execute(
+        "SELECT username, email FROM users WHERE username = ?",
+        (session["user"],)
+    )
+    user = cursor.fetchone()
+
+    conn.close()
+
+    return render_template("edit_profile.html", user=user)    
+
 
 @app.route("/delete_account", methods=["POST"])
 def delete_account():
@@ -497,12 +533,54 @@ def upload_skin():
         skin_type = detect_skin_type(image_path)
         recommended_products = ["Face Wash", "Moisturizer", "Sunscreen"]
 
+        # ------------------ ADDED: Natural Remedies & Kit ------------------
+        if skin_type == "Dry Skin":
+            natural = [
+                "Use aloe vera gel for hydration",
+                "Apply honey face mask weekly",
+                "Avoid harsh soaps"
+            ]
+            kit = "Hydration Care Kit: Face Wash + Moisturizer + Sunscreen"
+
+        elif skin_type == "Combination Skin":
+            natural = [
+                "Use multani mitti only on oily areas",
+                "Apply aloe vera on dry areas",
+                "Avoid harsh soaps"
+            ]
+            kit = "Balance Care Kit: Mild Cleanser + Gel Moisturizer + SPF"
+
+        elif skin_type == "Oily Skin":
+            natural = [
+                "Use multani mitti face pack twice a week",
+                "Apply rose water as toner",
+                "Avoid heavy creams"
+            ]
+            kit = "Oil Control Kit: Foaming Cleanser + Toner + Light Gel Moisturizer"
+
+        else:
+            natural = [
+                "Maintain a balanced skincare routine",
+                "Stay hydrated",
+                "Avoid experimenting with harsh products"
+            ]
+            kit = "Basic Care Kit: Cleanser + Moisturizer + Sunscreen"
+
+        # ----------- KEY FIX (DO NOT REMOVE) -----------
+        natural_remedies = natural
+        kit_name = kit
+        # ----------------------------------------------
+
         return render_template("result.html",
                                skin_type=skin_type,
                                recommendation="AI detected skin type using Machine Learning model.",
                                routine="Follow dermatologist recommended routine.",
                                yoga=["Surya Namaskar", "Meditation"],
-                               products=recommended_products)
+                               products=recommended_products,
+                               natural=natural,
+                               kit=kit,
+                               natural_remedies=natural_remedies,
+                               kit_name=kit_name)
 
     # GET request: show upload page
     return render_template("upload_skin.html")
@@ -678,6 +756,10 @@ def view_skin_data():
 
         if latest_pimples >= 3:
             personalized_tips.append("Consider reducing oily or sugary food intake.")
+
+    # Ensure the section always shows
+    if not personalized_tips:
+        personalized_tips.append("Great job! Your latest entry looks good. Keep it up 👍")
 
     # ---------------------------------
     # Graph Data (integrate progress_graphs)

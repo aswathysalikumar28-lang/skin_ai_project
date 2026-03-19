@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Profile</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa, #e86060);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* CARD */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 15px;
+            width: 380px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        /* INPUTS */
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        input:focus {
+            border-color: #ff6a4d;
+            outline: none;
+        }
+
+        /* MAIN BUTTON (MATCH YOUR SITE THEME) */
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #ff6a4d;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #ff3b1f;
+        }
+
+        /* BACK BUTTON (NOW PROPER BUTTON STYLE) */
+        .back-btn {
+            display: block;
+            margin-top: 15px;
+            text-decoration: none;
+            background: #ff6a4d;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .back-btn:hover {
+            background: #ff3b1f;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>Edit Profile</h2>
+
+    <form method="POST">
+        <input type="text" name="username" value="{{ user[0] }}" required>
+        <input type="email" name="email" value="{{ user[1] }}" required>
+
+        <button type="submit">Update Profile</button>
+    </form>
+
+    <a href="/" class="back-btn">Back To Home</a>
+</div>
+
+</body>
+</html>

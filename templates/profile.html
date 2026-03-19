@@ -54,6 +54,22 @@
             padding: 8px;
             border-radius: 6px;
         }
+
+        /* ADDED: Edit Profile Button Style */
+        .edit-btn {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            text-decoration: none;
+            background: #3498db;
+            color: white;
+            padding: 10px;
+            border-radius: 6px;
+        }
+
+        .edit-btn:hover {
+            background: #2980b9;
+        }
     </style>
 </head>
 
@@ -69,6 +85,9 @@
         <div class="info">
             <strong>Email:</strong> {{ email }}
         </div>
+
+        <!-- ADDED: Edit Profile Button -->
+        <a href="/edit_profile" class="edit-btn">Edit Profile</a>
 
         <form action="/delete_account" method="POST"
               onsubmit="return confirm('Are you sure? This action cannot be undone.')">
