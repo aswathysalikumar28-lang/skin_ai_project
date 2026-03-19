@@ -263,8 +263,8 @@ def edit_profile():
         # update session
         session["user"] = new_username
 
-        flash("Profile updated successfully")
-        return redirect("/profile")
+        flash("Profile updated successfully!", "success")  # ✅ ADDED category
+        return redirect("/edit_profile")
 
     # GET request → load current data
     cursor.execute(
@@ -275,7 +275,7 @@ def edit_profile():
 
     conn.close()
 
-    return render_template("edit_profile.html", user=user)    
+    return render_template("edit_profile.html", user=user)
 
 
 @app.route("/delete_account", methods=["POST"])

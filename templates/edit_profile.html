@@ -75,6 +75,24 @@
         .back-btn:hover {
             background: #ff3b1f;
         }
+
+        /* ADDED: Flash Message Styling */
+        .flash {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .flash.success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .flash.error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
     </style>
 </head>
 
@@ -82,6 +100,17 @@
 
 <div class="card">
     <h2>Edit Profile</h2>
+
+    <!-- ADDED: Flash Message Display -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="flash {{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
     <form method="POST">
         <input type="text" name="username" value="{{ user[0] }}" required>
