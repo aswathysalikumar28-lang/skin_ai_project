@@ -25,7 +25,7 @@
 
         /* HERO SECTION */
         .hero {
-            background-image: url("{{ url_for('static', filename='images/hero-bg.jpeg') }}");
+           /* background-image: url("{{ url_for('static', filename='images/hero-bg.jpeg') }}");*/
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -356,7 +356,15 @@
                 width: 180px;
             }
         }
-
+.video-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+}
     </style>
 </head>
 <body><!-- TOP NAVBAR --><div class="topbar">
@@ -387,7 +395,20 @@
 </div>
 
 </div>
-{% endif %}<!-- HERO IMAGE --><section class="hero">
+{% endif %}<!-- HERO IMAGE -->
+<section class="hero">
+    {% if user %}
+    <video autoplay muted loop playsinline class="video-bg">
+    <source src="{{ url_for('static', filename='videos/dashboard_bg.mp4') }}" type="video/mp4">
+</video>
+    {% endif %}
+    {% if not user %}
+        <style>
+            .hero {
+                background-image: url("{{ url_for('static', filename='images/hero-bg.jpeg') }}");
+            }
+        </style>
+    {% endif %}
     <div class="hero-overlay"></div>
     <div class="hero-content">
         <h1>Smart Skincare and Timeless Glow</h1>
@@ -398,7 +419,7 @@
         {% endif %}
     </div>{% if user %}
 <!-- Dashboard over Hero with white background -->
-<div class="dashboard-overlay" style="background:white; border-radius:12px; padding:40px; box-shadow:0 10px 25px rgba(0,0,0,0.1); margin-top:-50px;">
+<div class="dashboard-overlay" style="background:rgba(255,255,255,0.3); border-radius:12px; padding:40px; box-shadow:0 10px 25px rgba(0,0,0,0.1); margin-top:-50px;">
     <h2>Your Skin Progress</h2>
     <div class="dashboard-cards">
         <div class="dashboard-card">
@@ -437,7 +458,8 @@
             <p>Upload skin images and monitor patterns with smart analysis.</p>
         </div>
     </div>
-</section><!-- FEATURES SECTION --><section class="features">
+</section>
+<!-- FEATURES SECTION --><section class="features">
     <div class="feature">
         <img src="https://images.unsplash.com/photo-1605902711622-cfb43c4438a5?auto=format&fit=crop&w=200&q=80">
         <h3>Sleep Well</h3>

@@ -329,6 +329,7 @@ button.submit-btn:hover {
     background-size: cover;
 }
 
+
 /* ✅ RESTORED: HABIT PAGE BACKGROUND */
 .bg-habit {
     background: url("../images/habit-bg.jpeg") no-repeat center center fixed;

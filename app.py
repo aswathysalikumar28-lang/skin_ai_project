@@ -115,6 +115,7 @@ def homepage():
     )
 
 
+
 # ================= REGISTER =================
 @app.route("/register", methods=["GET", "POST"])
 def register():
