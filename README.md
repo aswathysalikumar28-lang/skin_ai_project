@@ -41,3 +41,6 @@ Future Improvements
 - Mobile-friendly interface
 - More accurate machine learning model
 - Dermatologist-level product recommendation system.
+
+Developer
+Built by Aswathy Salikumar
